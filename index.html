@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Poster</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Social Media Poster</h1>
+            <div class="theme-toggle">
+                <button id="theme-toggle-btn" aria-label="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <div class="composer-container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="compose">Compose</button>
+                    <button class="tab-btn" data-tab="drafts">Drafts</button>
+                    <button class="tab-btn" data-tab="scheduled">Scheduled</button>
+                    <button class="tab-btn" data-tab="settings">Settings</button>
+                </div>
+
+                <div class="tab-content">
+                    <!-- Compose Tab -->
+                    <div class="tab-pane active" id="compose">
+                        <div class="compose-area">
+                            <div class="rich-text-toolbar">
+                                <button class="toolbar-btn" data-action="bold" aria-label="Bold">
+                                    <i class="fas fa-bold"></i>
+                                </button>
+                                <button class="toolbar-btn" data-action="italic" aria-label="Italic">
+                                    <i class="fas fa-italic"></i>
+                                </button>
+                                <button class="toolbar-btn" data-action="link" aria-label="Insert Link">
+                                    <i class="fas fa-link"></i>
+                                </button>
+                                <button class="toolbar-btn" data-action="image" aria-label="Upload Image">
+                                    <i class="fas fa-image"></i>
+                                </button>
+                            </div>
+
+                            <div class="content-area">
+                                <div class="common-content">
+                                    <textarea id="common-text" placeholder="What's on your mind? Type your post here..."></textarea>
+
+                                    <div class="image-preview-container hidden">
+                                        <h3>Image Preview</h3>
+                                        <div id="image-preview"></div>
+                                        <button id="remove-image" class="secondary-btn">Remove Image</button>
+                                    </div>
+
+                                    <div class="upload-container">
+                                        <input type="file" id="image-upload" accept="image/*" multiple class="hidden">
+                                        <button id="upload-btn" class="secondary-btn">
+                                            <i class="fas fa-upload"></i> Upload Images
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="platform-specifics">
+                            <h3>Platform-Specific Content</h3>
+                            <p class="help-text">Customize your post for each platform or leave blank to use common content</p>
+
+                            <div class="platforms-container">
+                                <div class="platform-card" data-platform="bluesky">
+                                    <div class="platform-header">
+                                        <h4><i class="fas fa-cloud"></i> Bluesky</h4>
+                                        <div class="platform-toggle">
+                                            <input type="checkbox" id="bluesky-toggle" class="platform-checkbox" checked>
+                                            <label for="bluesky-toggle" class="toggle-label"></label>
+                                        </div>
+                                    </div>
+                                    <textarea class="platform-text" id="bluesky-text" placeholder="Bluesky-specific content (optional)"></textarea>
+                                    <div class="character-counter">
+                                        <span id="bluesky-counter">0</span>/300 characters
+                                    </div>
+                                </div>
+
+                                <div class="platform-card" data-platform="tumblr">
+                                    <div class="platform-header">
+                                        <h4><i class="fab fa-tumblr"></i> Tumblr</h4>
+                                        <div class="platform-toggle">
+                                            <input type="checkbox" id="tumblr-toggle" class="platform-checkbox" checked>
+                                            <label for="tumblr-toggle" class="toggle-label"></label>
+                                        </div>
+                                    </div>
+                                    <textarea class="platform-text" id="tumblr-text" placeholder="Tumblr-specific content (optional)"></textarea>
+                                    <div class="character-counter">
+                                        <span id="tumblr-counter">0</span>/500 characters
+                                    </div>
+                                </div>
+
+                                <div class="platform-card" data-platform="mastodon">
+                                    <div class="platform-header">
+                                        <h4><i class="fab fa-mastodon"></i> Mastodon</h4>
+                                        <div class="platform-toggle">
+                                            <input type="checkbox" id="mastodon-toggle" class="platform-checkbox" checked>
+                                            <label for="mastodon-toggle" class="toggle-label"></label>
+                                        </div>
+                                    </div>
+                                    <textarea class="platform-text" id="mastodon-text" placeholder="Mastodon-specific content (optional)"></textarea>
+                                    <div class="character-counter">
+                                        <span id="mastodon-counter">0</span>/500 characters
+                                    </div>
+                                </div>
+
+                                <div class="platform-card" data-platform="instagram">
+                                    <div class="platform-header">
+                                        <h4>
+                                            <i class="fab fa-instagram"></i> Instagram
+                                            <span class="export-badge">Export Only</span>
+                                        </h4>
+                                        <div class="platform-toggle">
+                                            <input type="checkbox" id="instagram-toggle" class="platform-checkbox" checked>
+                                            <label for="instagram-toggle" class="toggle-label"></label>
+                                        </div>
+                                    </div>
+                                    <textarea class="platform-text" id="instagram-text" placeholder="Instagram-specific content (optional)"></textarea>
+                                    <div class="character-counter">
+                                        <span id="instagram-counter">0</span>/2200 characters
+                                    </div>
+                                    <button id="export-instagram" class="secondary-btn">
+                                        <i class="fas fa-file-export"></i> Export for Instagram
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button id="save-draft-btn" class="secondary-btn">
+                                <i class="fas fa-save"></i> Save Draft
+                            </button>
+                            <button id="schedule-btn" class="secondary-btn">
+                                <i class="fas fa-calendar-alt"></i> Schedule
+                            </button>
+                            <button id="post-btn" class="primary-btn">
+                                <i class="fas fa-paper-plane"></i> Post Now
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Drafts Tab -->
+                    <div class="tab-pane" id="drafts">
+                        <h2>Saved Drafts</h2>
+                        <div id="drafts-container" class="items-container">
+                            <!-- Drafts will be loaded here dynamically -->
+                            <p class="empty-state">No drafts saved yet</p>
+                        </div>
+                    </div>
+
+                    <!-- Scheduled Tab -->
+                    <div class="tab-pane" id="scheduled">
+                        <h2>Scheduled Posts</h2>
+                        <div id="scheduled-container" class="items-container">
+                            <!-- Scheduled posts will be loaded here dynamically -->
+                            <p class="empty-state">No scheduled posts</p>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div class="tab-pane" id="settings">
+                        <h2>Platform Settings</h2>
+                        <p class="help-text">Configure your social media account credentials</p>
+
+                        <div class="settings-form">
+                            <!-- Bluesky Settings -->
+                            <div class="settings-section">
+                                <h3><i class="fas fa-cloud"></i> Bluesky</h3>
+                                <div class="form-group">
+                                    <label for="bluesky-username">Username</label>
+                                    <input type="text" id="bluesky-username" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bluesky-password">App Password</label>
+                                    <input type="password" id="bluesky-password" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Tumblr Settings -->
+                            <div class="settings-section">
+                                <h3><i class="fab fa-tumblr"></i> Tumblr</h3>
+                                <div class="form-group">
+                                    <label for="tumblr-api-key">API Key</label>
+                                    <input type="text" id="tumblr-api-key" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tumblr-blog-identifier">Blog Identifier</label>
+                                    <input type="text" id="tumblr-blog-identifier" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Mastodon Settings -->
+                            <div class="settings-section">
+                                <h3><i class="fab fa-mastodon"></i> Mastodon</h3>
+                                <div class="form-group">
+                                    <label for="mastodon-instance">Instance URL</label>
+                                    <input type="text" id="mastodon-instance" class="form-control" placeholder="https://mastodon.social">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mastodon-token">Access Token</label>
+                                    <input type="password" id="mastodon-token" class="form-control">
+                                </div>
+                            </div>
+
+                            <!-- Instagram Settings -->
+                            <div class="settings-section">
+                                <h3><i class="fab fa-instagram"></i> Instagram</h3>
+                                <p class="help-text">Requires a Business/Creator account and Facebook Developer App</p>
+                                <div class="form-group">
+                                    <label for="instagram-access-token">Access Token</label>
+                                    <input type="password" id="instagram-access-token" class="form-control">
+                                    <small class="form-help">Long-lived access token from Facebook Graph API</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instagram-business-account-id">Business Account ID</label>
+                                    <input type="text" id="instagram-business-account-id" class="form-control">
+                                    <small class="form-help">Your Instagram Business Account ID</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instagram-app-id">Facebook App ID</label>
+                                    <input type="text" id="instagram-app-id" class="form-control">
+                                    <small class="form-help">From your Facebook Developer App</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instagram-app-secret">App Secret</label>
+                                    <input type="password" id="instagram-app-secret" class="form-control">
+                                    <small class="form-help">From your Facebook Developer App</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instagram-facebook-page-id">Facebook Page ID</label>
+                                    <input type="text" id="instagram-facebook-page-id" class="form-control">
+                                    <small class="form-help">ID of the Facebook Page connected to your Instagram account</small>
+                                </div>
+                                <div class="help-info">
+                                    <a href="#" id="instagram-auth-help" class="help-link">How to set up Instagram API access</a>
+                                </div>
+                            </div>
+
+                            <div class="settings-actions">
+                                <button id="save-settings" class="primary-btn">Save Settings</button>
+                                <button id="export-config" class="secondary-btn">Export Config</button>
+                                <button id="import-config" class="secondary-btn">Import Config</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modals -->
+        <div id="schedule-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Schedule Post</h2>
+                <div class="form-group">
+                    <label for="schedule-date">Date</label>
+                    <input type="date" id="schedule-date" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="schedule-time">Time</label>
+                    <input type="time" id="schedule-time" class="form-control">
+                </div>
+                <button id="confirm-schedule" class="primary-btn">Schedule Post</button>
+            </div>
+        </div>
+
+        <div id="status-modal" class="modal">
+            <div class="modal-content status-content">
+                <span class="close">&times;</span>
+                <h2 id="status-title">Posting Status</h2>
+                <div id="status-message"></div>
+            </div>
+        </div>
+
+        <!-- Instagram Help Modal -->
+        <div id="instagram-help-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Instagram Graph API Setup Guide</h2>
+                <div class="help-content">
+                    <p>Setting up Instagram with the Graph API involves several steps:</p>
+
+                    <h3>1. Convert to a Business/Creator Account</h3>
+                    <ul>
+                        <li>Open the Instagram app and go to your profile</li>
+                        <li>Tap the menu icon (≡) and go to Settings</li>
+                        <li>Select "Account" and scroll to find "Switch to Professional Account"</li>
+                        <li>Choose Business or Creator based on your needs</li>
+                        <li>Connect to a Facebook Page (you'll need to create one if you don't have one)</li>
+                    </ul>
+
+                    <h3>2. Create a Facebook Developer Account</h3>
+                    <ul>
+                        <li>Go to <a href="https://developers.facebook.com/" target="_blank">developers.facebook.com</a></li>
+                        <li>Sign in with your Facebook account</li>
+                        <li>Complete the registration process if you haven't already</li>
+                    </ul>
+
+                    <h3>3. Create a Facebook App</h3>
+                    <ul>
+                        <li>Click "My Apps" and then "Create App"</li>
+                        <li>Select "Business" as the app type</li>
+                        <li>Enter app name and contact email, then click "Create App"</li>
+                    </ul>
+
+                    <h3>4. Set Up Instagram Graph API</h3>
+                    <ul>
+                        <li>From your app dashboard, find "Add Products"</li>
+                        <li>Look for "Instagram Graph API" and click "Set Up"</li>
+                        <li>Follow the setup instructions</li>
+                    </ul>
+
+                    <h3>5. Find Your Credentials</h3>
+                    <ul>
+                        <li><strong>App ID & App Secret</strong>: Available in App Settings → Basic</li>
+                        <li><strong>Access Token</strong>: Generate from App Dashboard → Instagram Graph API → Basic Display</li>
+                        <li><strong>Business Account ID</strong>: Use the Graph API Explorer to find your Instagram Business Account ID</li>
+                        <li><strong>Facebook Page ID</strong>: Your Facebook page URL contains the Page ID (e.g., facebook.com/yourpage-12345678 where 12345678 is the ID)</li>
+                    </ul>
+
+                    <h3>Alternatives to Direct Integration</h3>
+                    <p>If this process seems too complex, consider these alternatives:</p>
+                    <ul>
+                        <li>Use IFTTT or Zapier to auto-post from another platform to Instagram</li>
+                        <li>Use Buffer, Hootsuite, or Later for simplified Instagram scheduling</li>
+                        <li>Disable Instagram in this app and post manually to Instagram</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/@atproto/api@0.6.23/dist/bundle.js"></script>
+    <script src="https://unpkg.com/tumblr.js@5.0.0/dist/tumblr.min.js"></script>
+    <script src="https://unpkg.com/masto@6.4.1/dist/masto.min.js"></script>
+    <script src="https://unpkg.com/instagram-private-api@1.45.3/dist/instagram-private-api.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/composer.js"></script>
+    <script src="js/platforms.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+
+</html>
